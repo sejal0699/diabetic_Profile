@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -26,12 +27,20 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+
 	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+<string>We need access to the camera to allow you to take a profile picture</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to choose a profile picture</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need access to save photos to your library</string>
+
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>
