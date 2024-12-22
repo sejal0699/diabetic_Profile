@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
-    padding: 20,
+    padding: vw(20),
     backgroundColor: colors.white,
   },
   subheading: {
@@ -42,13 +42,13 @@ export const styles = StyleSheet.create({
     color: colors.checkedCheckboxBgColor,
     fontWeight: 500,
     fontSize: vw(16),
-    left:10
+    left: 10,
   },
   profileText: {
     color: colors.grayText,
     fontWeight: 400,
     fontSize: vw(14),
-    left:10
+    left: 10,
   },
   formView: {
     top: vw(12),
@@ -57,6 +57,7 @@ export const styles = StyleSheet.create({
   customButtonStyle: {
     width: '90%',
     alignSelf: 'center',
+    
   },
   disabledButton: {
     backgroundColor: colors.disabledButtonColor,
@@ -73,52 +74,51 @@ export const styles = StyleSheet.create({
     transform: [{translateY: -10}],
   },
   dropdown: {
-    height: 50,
+    height: vw(50),
     borderColor: 'gray',
     borderWidth: 0.5,
     borderRadius: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: vw(8),
   },
   placeholderStyle: {
-    fontSize: 12,
-    color:colors.lightGrey
+    fontSize: vw(12),
+    color: colors.lightGrey,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: vw(16),
   },
   iconStyle: {
     position: 'absolute',
     right: 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    width: 20,
-    height: 20,
+    width: vw(20),
+    height: vw(20),
     tintColor: colors.darkBlue,
   },
   inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+    height: vw(40),
+    fontSize: vw(16),
   },
   label: {
-    fontSize: 12,
+    fontSize: vw(12),
     left: 4,
-    bottom: 2,
+    bottom: vw(2),
   },
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    // borderColor:colors.green,
-    borderWidth: 1,
-    marginBottom: 10,
+    paddingVertical: vw(8),
+    paddingHorizontal: vw(15),
+    marginBottom: 4,
     borderRadius: 10,
+    backgroundColor: colors.grayBackground,
   },
   icon: {
-    marginRight: 10,
+    marginRight: vw(10),
     top: 10,
   },
   optionText: {
-    fontSize: 16,
+    fontSize: vw(16),
   },
 });

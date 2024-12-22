@@ -1,12 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {TextInput,Text,View,StyleSheet,Animated,TouchableOpacity,Image,ImageSourcePropType} from 'react-native';
+import {TextInput,Text,View,Animated,TouchableOpacity,Image,ImageSourcePropType, TextStyle} from 'react-native';
 import {Controller,RegisterOptions} from 'react-hook-form';
-import {colors} from '../themes';
-import { vw } from '../utils/dimension';
+import { styles } from './styles';
 
 interface CustomTextInputProps {
   control?: any;
-  name?: string;
+  name?: any;
   rules?: RegisterOptions;
   placeholder?: string;
   errorMessage?: string;
@@ -46,7 +45,7 @@ const CustomTextInput = ({
     }
   }, [isFocused, value]);
 
-  const labelStyle = {
+  const labelStyle: Animated.WithAnimatedObject<TextStyle>= {
     position: 'absolute',
     top: labelPosition.interpolate({
       inputRange: [0, 1],
@@ -93,7 +92,7 @@ const CustomTextInput = ({
           <TouchableOpacity
           style={[customIconContainerStyle]} 
             onPress={onRightIconPress}>
-            <Image source={rightIcon} 
+            <Image source={rightIconSource} 
             />
           </TouchableOpacity>
         )}
@@ -105,23 +104,3 @@ const CustomTextInput = ({
 
 export default CustomTextInput
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  input: {
-    padding: 10,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
-    borderRadius: 10,
-    height: vw(50),
-    width: '100%',
-  },
-  errorText: {
-    color: colors.red,
-    fontSize: vw(12),
-    marginTop: 5,
-  },
- 
-});

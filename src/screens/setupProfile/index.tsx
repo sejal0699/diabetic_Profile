@@ -1,27 +1,31 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {Controller, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import * as Yup from 'yup';
+import {Dropdown} from 'react-native-element-dropdown';
+import GalleryModal from '../../components/galleryModal';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {request, PERMISSIONS} from 'react-native-permissions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {colors} from '../../themes';
+import CustomTextInput from '../../components/customTextInput';
+import CustomButton from '../../components/customButton';
 import {styles} from './styles';
 import BackArrow from '../../components/backArrow';
 import {Icons, Images} from '../../assets';
 import strings from '../../utils/strings';
-import CustomTextInput from '../../components/CustomTextInput';
-import {Controller, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import CustomButton from '../../components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import * as Yup from 'yup';
-import {Dropdown} from 'react-native-element-dropdown';
-import GalleryModal from '../../components/GalleryModal';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {request, PERMISSIONS} from 'react-native-permissions';
-import {colors} from '../../themes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
-    .min(3, 'Username must be at least 3 characters')
+    .min(3, 'Username must be at least 3 characters. Try instead Matthew_123')
+    .matches(
+      /^[a-zA-Z0-9_]+$/,
+      'Username can only contain letters, numbers, and underscores.',
+    )
     .required('Name is required'),
   birthday: Yup.string().required('Birthday is required'),
   gender: Yup.string().required('Gender is required'),
@@ -29,7 +33,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const SetupProfile = () => {
-  const navigation = useNavigation();
   const [isDisabled, setIsDisabled] = useState(true);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState('');
@@ -39,12 +42,26 @@ const SetupProfile = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItems, setSelectedItems] = useState({});
-  const {control,handleSubmit,formState: {errors, isValid},setValue} = useForm({
-   resolver: yupResolver(validationSchema),
+  const [selectedAvatarIndex, setSelectedAvatarIndex] = useState(null);
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+    setValue,
+  } = useForm({
+    defaultValues: {
+      username: '',
+      birthday: '',
+      gender: '',
+    },
+    resolver: yupResolver(validationSchema),
     mode: 'onChange',
   });
 
-  const saveProfileImage = async uri => {
+  useEffect(() => {
+    setIsDisabled(!isValid); 
+  }, [isValid]);
+  const saveProfileImage = async (uri: any) => {
     try {
       await AsyncStorage.setItem('profileImage', uri);
     } catch (error) {
@@ -54,9 +71,12 @@ const SetupProfile = () => {
 
   const loadProfileImage = async () => {
     try {
-      const uri = await AsyncStorage.getItem('profileImage');
-      if (uri) {
-       setProfileImage(uri);
+      const savedAvatarIndex = await AsyncStorage.getItem('selectedAvatar');
+      if (savedAvatarIndex) {
+        const avatarIndex = JSON.parse(savedAvatarIndex);
+        setSelectedAvatarIndex(avatarIndex);
+        const avatarImage = Images[`avatar${avatarIndex}`];
+        setProfileImage(avatarImage || Images.profileImage);
       }
     } catch (error) {
       console.error('Error loading profile image:', error);
@@ -73,7 +93,7 @@ const SetupProfile = () => {
     {label: 'Others', value: '3'},
   ];
 
-  const requestPermission = async permissionType => {
+  const requestPermission = async (permissionType: any) => {
     console.log(permissionType);
     try {
       const result = await request(permissionType);
@@ -84,7 +104,7 @@ const SetupProfile = () => {
     }
   };
 
-  const handleImagePick = async source => {
+  const handleImagePick = async (source: any) => {
     let hasPermission;
     if (source === 'gallery') {
       hasPermission = await requestPermission(PERMISSIONS.IOS.PHOTO_LIBRARY);
@@ -99,7 +119,7 @@ const SetupProfile = () => {
       includeBase64: false,
     };
 
-    const callback = response => {
+    const callback = (response: any) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -136,20 +156,22 @@ const SetupProfile = () => {
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
-  const handleConfirm = date => {
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  const handleConfirm = (date: Date) => {
+    const formattedDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
     setDate(formattedDate);
     setValue('birthday', formattedDate);
     setDatePickerVisibility(false);
   };
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     console.log(data);
+    
   };
-  const handleSelection = item => {
+  const handleSelection = (item: any) => {
     console.log(item);
     setSelectedItems({[item.value]: true});
     setValues(item.value);
-    setIsDropdownVisible(false);
   };
 
   return (
@@ -183,7 +205,9 @@ const SetupProfile = () => {
             name="username"
             placeholder="Username"
             errorMessage={errors.username?.message}
-            rightIconSource={errors.username ? Icons.checkIcon : Icons.crossIcon}
+            rightIconSource={
+              errors.username ? Icons.crossIcon : Icons.checkIcon
+            }
             customIconContainerStyle={styles.iconContainer}
           />
           <CustomTextInput

@@ -1,7 +1,8 @@
 import {View,TouchableOpacity, Image} from 'react-native';
-import React from 'react';
-import {Icons} from '../../assets';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+
+import {Icons} from '../../assets';
 import { styles } from './styles';
 
 const BackArrow = () => {

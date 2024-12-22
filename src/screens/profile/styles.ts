@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../../themes';
-import {vh, vw} from '../../utils/dimension';
+import {vw} from '../../utils/dimension';
 
 export const styles = StyleSheet.create({
   container: {
@@ -107,7 +107,6 @@ export const styles = StyleSheet.create({
     bottom: vw(30),
   },
   containerStyle: {
-    //alignItems: 'center',
     alignSelf: 'center',
     bottom: vw(2),
   },

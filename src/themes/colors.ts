@@ -16,5 +16,8 @@ export default {
   darkBlue:'#000080',
   green:'#32A071',
   gray:'#F6F9FA',
-  lightGrey:'#7F879A'
+  lightGrey:'#7F879A',
+  rgbaBackgroundColor:'rgba(0, 0, 0, 0.5)',
+  black:'#000000',
+  grayBackground:'#F9FAFA'
 };
