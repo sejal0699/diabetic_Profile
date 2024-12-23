@@ -1,4 +1,4 @@
-import {View,Text,TouchableOpacity,Image,TouchableWithoutFeedback,Keyboard,ScrollView} from 'react-native';
+import {View,Text,TouchableOpacity,Image,TouchableWithoutFeedback,Keyboard,ScrollView, Platform, KeyboardAvoidingView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -94,10 +94,13 @@ const Profile = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex:1}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <BackArrow />
         <Text style={styles.heading}>{strings.heading}</Text>
         <Text style={styles.subheading}>{strings.subHeadingString}</Text>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.formView}>
             <CustomTextInput
               control={control}
@@ -180,6 +183,7 @@ const Profile = () => {
             disabled={isDisabled}
           />
         </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

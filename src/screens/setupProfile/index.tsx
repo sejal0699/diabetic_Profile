@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Controller, useForm} from 'react-hook-form';
@@ -164,7 +164,7 @@ const SetupProfile = () => {
     setValue('birthday', formattedDate);
     setDatePickerVisibility(false);
   };
-  const onSubmit = (data) => {
+  const onSubmit = (data:any) => {
     console.log(data);
     
   };
@@ -181,6 +181,12 @@ const SetupProfile = () => {
         <Text style={styles.heading}>{strings.setupHeading}</Text>
         <Text style={styles.subheading}>{strings.setupSubHeading}</Text>
       </View>
+      <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex:1}}>
+        <ScrollView>
+
+  
       <View style={styles.profileSection}>
         <View style={styles.profilePictureContainer}>
           {profileImage &&
@@ -300,6 +306,8 @@ const SetupProfile = () => {
           />
         </View>
       </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
