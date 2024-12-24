@@ -2,6 +2,7 @@ const ScreenNames = {
   Home: 'home',
   SetupProfile: 'SetupProfile',
   avatar:'avatar',
-  OTP:'Otp'
+  OTP:'Otp',
+  Notification:'Notification'
 };
 export {ScreenNames}

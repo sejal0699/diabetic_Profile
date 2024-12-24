@@ -6,6 +6,7 @@ import {ScreenNames} from './ScreenNames';
 import SetupProfile from '../screens/setupProfile';
 import AvatarModal from '../screens/avatar';
 import OTP from '../screens/otp';
+import Notification from '../screens/notification';
 
 const RootNavigator = () => {
   const navigationRef: any = useNavigationContainerRef();
@@ -13,6 +14,11 @@ const RootNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
+      <Stack.Screen
+          name={ScreenNames.Notification}
+          component={Notification}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name={ScreenNames.Home}
           component={Profile}
